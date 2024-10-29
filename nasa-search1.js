@@ -20,26 +20,29 @@ export class nasaSearch1 extends DDDSuper(I18NMixin(LitElement)) {
 
   constructor() {
     super();
-    this.title = "";
-    this.t = this.t || {};
-    this.t = {
-      ...this.t,
-      title: "Title",
-    };
-    this.registerLocalization({
-      context: this,
-      localesPath:
-        new URL("./locales/nasa-search1.ar.json", import.meta.url).href +
-        "/../",
-      locales: ["ar", "es", "hi", "zh"],
-    });
+    this.title = '';
+    this.value = null;
+    this.loading = false;
+    this.items = [];
+    
+    
+    //this.registerLocalization({
+      //context: this,
+      //localesPath:
+        //new URL("./locales/nasa-search1.ar.json", import.meta.url).href +
+        //"/../",
+      //locales: ["ar", "es", "hi", "zh"],
+    //});
   }
 
   // Lit reactive properties
   static get properties() {
     return {
-      ...super.properties,
+      //...super.properties,
       title: { type: String },
+      loading: { type: Boolean, reflect: true },
+      items: { type: Array, },
+      value: { type: String },
     };
   }
 
