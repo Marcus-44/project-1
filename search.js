@@ -12,7 +12,7 @@ import { I18NMixin } from "@haxtheweb/i18n-manager/lib/I18NMixin.js";
  * @demo index.html
  * @element nasa-search1
  */
-export class nasaSearch1 extends DDDSuper(I18NMixin(LitElement)) {
+export class project1 extends DDDSuper(I18NMixin(LitElement)) {
 
   static get tag() {
     return "nasa-search1";
@@ -20,19 +20,22 @@ export class nasaSearch1 extends DDDSuper(I18NMixin(LitElement)) {
 
   constructor() {
     super();
-    this.title = '';
+    this.title = "Search";
     this.value = null;
     this.loading = false;
     this.items = [];
+    this.url = '';
+    this.query = '';
+
     
     
-    //this.registerLocalization({
-      //context: this,
-      //localesPath:
-        //new URL("./locales/nasa-search1.ar.json", import.meta.url).href +
-        //"/../",
-      //locales: ["ar", "es", "hi", "zh"],
-    //});
+    this.registerLocalization({
+      context: this,
+      localesPath:
+        new URL("./locales/project-1.ar.json", import.meta.url).href +
+        "/../",
+      locales: ["ar", "es", "hi", "zh"],
+    });
   }
 
   // Lit reactive properties
@@ -41,10 +44,13 @@ export class nasaSearch1 extends DDDSuper(I18NMixin(LitElement)) {
       //...super.properties,
       title: { type: String },
       loading: { type: Boolean, reflect: true },
-      items: { type: Array, },
-      value: { type: String },
+      items: { type: Array, attribute: "items", reflect: true},
+      value: { type: Object, reflect: true },
+      url: { type: String },
+      query: { type: String, attribute: "query"},
     };
   }
+
 
   // Lit scoped styles
   static get styles() {
@@ -60,9 +66,9 @@ export class nasaSearch1 extends DDDSuper(I18NMixin(LitElement)) {
         margin: var(--ddd-spacing-2);
         padding: var(--ddd-spacing-4);
       }
-      h3 span {
-        font-size: var(--nasa-search1-label-font-size, var(--ddd-font-size-s));
-      }
+      
+
+
     `];
   }
 
@@ -70,10 +76,41 @@ export class nasaSearch1 extends DDDSuper(I18NMixin(LitElement)) {
   render() {
     return html`
 <div class="wrapper">
-  <h3><span>${this.t.title}:</span> ${this.title}</h3>
-  <slot></slot>
-</div>`;
+
+  <h2>${this.title}</h2>
+
+  <div class="searchBar">
+    <input class="input" placeholder="Enter URL" }" @keydown="${(e)=>{if(e.key==='Enter'){this.formatQuery();}}}"/>
+    <button class="search-button" @click="${this.formatQuery}" label="analyze">Analyze</button>
+
+  
+</div>`;}
+
+
+
+formatQuery() {
+  this.loading = true;
+
+  this.url = '';
+  let jsonUrl = this.url+'site.json';
+
+  if(this.query.endsWith("site.json")) {
+      this.url = this.query;
+  } else{
+      this.url = this.query+jsonUrl;
   }
+}
+
+
+
+
+
+
+
+
+
+
+
 
   /**
    * haxProperties integration via file reference
@@ -84,4 +121,4 @@ export class nasaSearch1 extends DDDSuper(I18NMixin(LitElement)) {
   }
 }
 
-globalThis.customElements.define(nasaSearch1.tag, nasaSearch1);
+globalThis.customElements.define(project1.tag, project1);
